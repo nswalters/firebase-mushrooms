@@ -1,17 +1,25 @@
-// import utils from '../../helpers/utils';
+import mushroomComponent from '../mushroom/mushroom';
 import mushroomData from '../../helpers/data/mushroomData';
-
-// get all mushrooms
-// loop and create domstring
-// printtodom
+import utils from '../../helpers/utils';
 
 const buildForest = () => {
   mushroomData.getMushrooms()
-    .then((response) => console.error('Get Mushrooms Worked!!', response.data))
-    .catch((err) => console.error('Get Mushrooms BROKE :(', err));
+    .then((mushrooms) => {
+      console.error('Get Mushrooms Worked!!', mushrooms);
+      let domString = `
+        <h2 class="text-center">Forest</h2>
+        <div class="d-flex flex-wrap">
+      `;
 
-  // const domString = 'I SEE MOAR MUSHROOMS!!!';
-  // utils.printToDom('#forest', domString);
+      mushrooms.forEach((mushroom) => {
+        domString += mushroomComponent.mushroomMaker(mushroom);
+      });
+
+      domString += '</div>';
+
+      utils.printToDom('#forest', domString);
+    })
+    .catch((err) => console.error('Get Mushrooms BROKE :(', err));
 };
 
 export default {
