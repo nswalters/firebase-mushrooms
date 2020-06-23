@@ -6,7 +6,7 @@ const buildMycologsts = () => {
   mycologistData.getMycologists()
     .then((mycologists) => {
       let domString = `
-      <h2 class="text-center">Mycologists</h2>
+      <h2 class="text-center">Mycologist Hut</h2>
       <div class="d-flex flex-wrap">
     `;
 
