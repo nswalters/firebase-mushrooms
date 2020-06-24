@@ -20,6 +20,9 @@ const getMushrooms = () => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const deleteMushroom = (mushroomId) => axios.delete(`${baseUrl}/mushrooms/${mushroomId}.json`);
+
 export default {
   getMushrooms,
+  deleteMushroom,
 };
