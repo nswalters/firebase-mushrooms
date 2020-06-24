@@ -1,6 +1,28 @@
 import mushroomComponent from '../mushroom/mushroom';
+import smash from '../../helpers/data/smash';
 import mushroomData from '../../helpers/data/mushroomData';
 import utils from '../../helpers/utils';
+
+const removeShroomEvent = (e) => {
+  const mushroomId = e.target.closest('.card').id;
+  console.error(mushroomId);
+
+  smash.totallyRemoveShroomie(mushroomId)
+    .then(() => {
+      // eslint-disable-next-line no-use-before-define
+      buildForest();
+    })
+    .catch((err) => console.error('could not delete mushroom', err));
+
+  // actually delete this mushroom from firebase
+  mushroomData.deleteMushroom(mushroomId)
+    .then(() => {
+      // reprint the dom (so the lil shroomie goes bye bye)
+      // eslint-disable-next-line no-use-before-define
+      buildForest();
+    })
+    .catch((err) => console.error('could not delete mushroom', err));
+};
 
 const buildForest = () => {
   mushroomData.getMushrooms()
@@ -17,6 +39,8 @@ const buildForest = () => {
       domString += '</div>';
 
       utils.printToDom('#forest', domString);
+
+      $('body').on('click', '.delete-shroom', removeShroomEvent);
     })
     .catch((err) => console.error('Get Mushrooms BROKE :(', err));
 };
